@@ -14,6 +14,7 @@ namespace EmployeeManagement.Models
         [Required]
         public string LastName { get; set; }
         [Required]
+        [EmailAddress(ErrorMessage = "Yo! This shit aint a valid email")]
         public string Email { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Gender Gender { get; set; }
