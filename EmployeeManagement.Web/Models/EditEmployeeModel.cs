@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using EmployeeManagement.Models;
 using EmployeeManagement.Models.CustomValidators;
 
-namespace EmployeeManagement.Models
+namespace EmployeeManagement.Web.Models
 {
-    public class Employee
+    public class EditEmployeeModel
     {
         public int EmployeeId { get; set; }
         [Required]
@@ -18,6 +20,10 @@ namespace EmployeeManagement.Models
         [EmailAddress(ErrorMessage = "Yo! This shit aint a valid email")]
         [EmailDomainValidator(AllowedDomain = "pragimtech.com")]
         public string Email { get; set; }
+
+        [CompareProperty("Email",
+            ErrorMessage = "Email and Confirm Email must match")]
+        public string ConfirmEmail { get; set; }
         public DateTime DateOfBirth { get; set; }
         public Gender Gender { get; set; }
         public int DepartmentId { get; set; }
