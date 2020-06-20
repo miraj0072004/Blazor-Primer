@@ -28,6 +28,9 @@ namespace EmployeeManagement.Web.Pages
         [Inject] 
         public IMapper Mapper { get; set; }
 
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
+
         public List<Department> Departments { get; set; } = new List<Department>();
 
         //public string DepartmentId { get; set; }
@@ -52,7 +55,14 @@ namespace EmployeeManagement.Web.Pages
             
         }
 
-        protected void HandleValidSubmit()
-        { }
+        protected async void HandleValidSubmit()
+        {
+            Mapper.Map(EditEmployeeModel, Employee);
+            var result = await EmployeeService.UpdateEmployee(Employee);
+            if (result != null)
+            {
+                NavigationManager.NavigateTo("/");
+            }
+        }
     }
 }
