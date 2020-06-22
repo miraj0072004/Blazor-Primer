@@ -13,6 +13,7 @@ namespace EmployeeManagement.Web.Pages
     public class EditEmployeeBase : ComponentBase
     {
         public Employee Employee { get; set; } = new Employee();
+        public string PageHeader { get; set; }
 
         public EditEmployeeModel EditEmployeeModel { get; set; } = new EditEmployeeModel();
 
@@ -41,10 +42,12 @@ namespace EmployeeManagement.Web.Pages
 
             if (employeeId != 0)
             {
+                PageHeader = "Edit Employee";
                 Employee = await EmployeeService.GetEmployee(int.Parse(Id));
             }
             else
             {
+                PageHeader = "Create Employee";
                 Employee = new Employee
                 {
                     DepartmentId = 1,
