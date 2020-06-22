@@ -34,5 +34,10 @@ namespace EmployeeManagement.Web.Services
         {
             return await _httpClient.PostJsonAsync<Employee>("api/employees", newEmployee);
         }
+
+        public async Task DeleteEmployee(int id)
+        {
+            await _httpClient.DeleteAsync($"api/employees/{id}");
+        }
     }
 }
