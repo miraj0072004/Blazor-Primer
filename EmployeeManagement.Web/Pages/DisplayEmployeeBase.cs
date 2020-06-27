@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using EmployeeManagement.Models;
+using EmployeeManagement.Web.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace EmployeeManagement.Web.Pages
@@ -12,6 +14,12 @@ namespace EmployeeManagement.Web.Pages
         [Parameter]
         public bool ShowFooter { get; set; }
 
+        [Parameter]
+        public EventCallback<int> OnEmployeeDeleted { get; set; }
+
+        [Inject]
+        public IEmployeeService EmployeeService { get; set; }
+
         protected bool IsSelected { get; set; }
 
         [Parameter]
@@ -21,6 +29,13 @@ namespace EmployeeManagement.Web.Pages
         {
             IsSelected = (bool)e.Value;
             await OnEmployeeSelection.InvokeAsync(IsSelected);
+        }
+
+        protected async Task Delete_Click()
+        {
+            await EmployeeService.DeleteEmployee(Employee.EmployeeId);
+            await OnEmployeeDeleted.InvokeAsync(Employee.EmployeeId);
+            //NavigationManager.NavigateTo("/", true);
         }
     }
 }
