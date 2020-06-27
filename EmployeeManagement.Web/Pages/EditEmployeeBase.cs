@@ -12,6 +12,8 @@ namespace EmployeeManagement.Web.Pages
 {
     public class EditEmployeeBase : ComponentBase
     {
+
+        public PragimTech.Components.ConfirmBase DeleteConfirmation { get; set; }
         public Employee Employee { get; set; } = new Employee();
         public string PageHeader { get; set; }
 
@@ -94,8 +96,19 @@ namespace EmployeeManagement.Web.Pages
 
         protected async Task Delete_Click()
         {
-            await EmployeeService.DeleteEmployee(Employee.EmployeeId);
-            NavigationManager.NavigateTo("/");
+            //await EmployeeService.DeleteEmployee(Employee.EmployeeId);
+            //NavigationManager.NavigateTo("/");
+
+            DeleteConfirmation.Show();
+        }
+
+        protected async Task ConfirmDelete_Click(bool deleteConfirmed)
+        {
+            if (deleteConfirmed)
+            {
+                await EmployeeService.DeleteEmployee(Employee.EmployeeId);
+                NavigationManager.NavigateTo("/");
+            }
         }
     }
 }
