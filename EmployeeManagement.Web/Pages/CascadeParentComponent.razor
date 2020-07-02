@@ -1,0 +1,10 @@
+﻿@page "/cascpc"
+<h1 style="@Style">CascadeParentComponent</h1>
+
+<CascadingValue Value="@Style">
+    <CascadeChildComponent></CascadeChildComponent>
+</CascadingValue>
+
+@code {
+    public string Style { get; set; } = "color:red";
+}
