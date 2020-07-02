@@ -1,10 +1,13 @@
 ﻿@page "/cascpc"
 <h1 style="@Style">CascadeParentComponent</h1>
 
-<CascadingValue Value="@Style">
-    <CascadeChildComponent></CascadeChildComponent>
+<CascadingValue Value="@Style" Name="ColorStyle">
+    <CascadingValue Value="@BorderStyle" Name="BorderStyle">
+        <CascadeChildComponent></CascadeChildComponent>
+    </CascadingValue>    
 </CascadingValue>
 
 @code {
     public string Style { get; set; } = "color:red";
+    public string BorderStyle { get; set; } = "border:1px solid red";
 }
