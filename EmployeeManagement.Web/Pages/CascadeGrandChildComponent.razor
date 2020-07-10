@@ -1,4 +1,4 @@
-﻿<h1 style="@ColorStyle;  @BorderStyle">CascadeGrandChildComponent</h1>
+﻿<h1 style="@ColorStyle;  @BorderStyle">CascadeGrandChildComponent @Counter</h1>
 
 @code {
     [CascadingParameter(Name = "ColorStyle")]
@@ -6,4 +6,7 @@
 
     [CascadingParameter(Name = "BorderStyle")]
     public string BorderStyle { get; set; }
+
+    [CascadingParameter(Name = "Counter")]
+    public int Counter { get; set; }
 }
