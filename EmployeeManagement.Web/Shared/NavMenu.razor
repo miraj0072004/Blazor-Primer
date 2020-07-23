@@ -7,46 +7,55 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Employees
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/editemployee" Match="NavLinkMatch.All" @onclick="HandleClick">
-                <span class="oi oi-file" aria-hidden="true"></span> Create
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/identity/account/login" Match="NavLinkMatch.All">
-                <span class="oi oi-lock-locked" aria-hidden="true"></span> Login
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/identity/account/logout" Match="NavLinkMatch.All">
-                <span class="oi oi-power-standby" aria-hidden="true"></span> Logout
-            </NavLink>
-        </li>
+        <AuthorizeView>
+            <Authorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Employees
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="/editemployee" Match="NavLinkMatch.All" @onclick="HandleClick">
+                        <span class="oi oi-file" aria-hidden="true"></span> Create
+                    </NavLink>
+                </li>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="/identity/account/logout" Match="NavLinkMatch.All">
+                        <span class="oi oi-power-standby" aria-hidden="true"></span> Logout
+                    </NavLink>
+                </li>
+                
+            </Authorized>
+        
+            <NotAuthorized>
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="/identity/account/login" Match="NavLinkMatch.All">
+                        <span class="oi oi-lock-locked" aria-hidden="true"></span> Login
+                    </NavLink>
+                </li>
+            </NotAuthorized>
+        </AuthorizeView>
     </ul>
 </div>
 
-@inject NavigationManager NavigationManager;
 
-@code {
-    private bool collapseNavMenu = true;
+    @inject NavigationManager NavigationManager;
 
-   
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    @code {
+        private bool collapseNavMenu = true;
 
 
+        private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
+
+
+        private void ToggleNavMenu()
+        {
+            collapseNavMenu = !collapseNavMenu;
+        }
+
+        private void HandleClick()
+        {
+            NavigationManager.NavigateTo("editemployee", true);
+        }
     }
-
-    private void HandleClick()
-    {
-        NavigationManager.NavigateTo("editemployee", true);
-    }
-}
