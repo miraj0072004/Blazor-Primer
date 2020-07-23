@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using EmployeeManagement.Models;
 using EmployeeManagement.Web.Models;
 using EmployeeManagement.Web.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace EmployeeManagement.Web.Pages
 {
@@ -36,10 +38,21 @@ namespace EmployeeManagement.Web.Pages
 
         public List<Department> Departments { get; set; } = new List<Department>();
 
+        [CascadingParameter]
+        private Task<AuthenticationState> authenticationStateTask { get; set; }
+
         //public string DepartmentId { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
+            var authenticationState = await authenticationStateTask;
+
+            if (!authenticationState.User.Identity.IsAuthenticated)
+            {
+                string returnUrl = WebUtility.UrlEncode($"/editEmployee/{Id}");    
+                NavigationManager.NavigateTo($"/identity/account/login?returnUrl={returnUrl}");
+            }
+
             int.TryParse(Id, out int employeeId);
 
             if (employeeId != 0)
